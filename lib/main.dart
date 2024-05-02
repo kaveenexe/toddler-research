@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/pages/chat_screen.dart';
+import 'package:flutterapp/pages/dangerscissor.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFF2F2F2)),
-      home: const ChatAssistant(),
+      home: const ReminderPage(),
     );
   }
 }
