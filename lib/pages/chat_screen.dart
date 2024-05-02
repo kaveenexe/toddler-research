@@ -26,7 +26,7 @@ class _ChatAssistantState extends State<ChatAssistant> {
     return ListView.builder(
       itemCount: _messages.length,
       itemBuilder: (BuildContext context, int index) {
-        return ChatBubble(text: _messages[index]);
+        return ChatBubble(text: _messages[index], isMe: true,);
       },
     );
   }
