@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
-import "package:flutterapp/components/ChatBubble_screen.dart";
-import "package:flutterapp/components/ChatInputField_screen.dart";
-import "package:flutterapp/components/SendButton_screen.dart";
+import "package:flutterapp/components/ChatUI/ChatBubble_screen.dart";
+import "package:flutterapp/components/ChatUI/ChatInputField_screen.dart";
+import "package:flutterapp/components/ChatUI/SendButton_screen.dart";
 
 class ChatAssistant extends StatefulWidget {
   const ChatAssistant({super.key});
@@ -38,9 +38,15 @@ class _ChatAssistantState extends State<ChatAssistant> {
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Chat'),
-      ),
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              // Handle back button press here
+            },
+          ),
+          title: const Text('Chat Assistant'), // Set the app bar title here
+        ),
       body: Column(
         children: <Widget>[
           Expanded(

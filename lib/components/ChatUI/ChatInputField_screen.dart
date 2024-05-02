@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutterapp/components/SendButton_screen.dart';
+import 'package:flutterapp/components/ChatUI/SendButton_screen.dart';
 
 class ChatInputField extends StatelessWidget {
   final TextEditingController textController;
