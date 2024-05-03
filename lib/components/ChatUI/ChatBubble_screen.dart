@@ -8,11 +8,11 @@ class ChatBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Widget messageWidget = Flexible( // Wrap Container with Flexible
+    final Widget messageWidget = Flexible(
       child: Container(
         padding: EdgeInsets.all(10.0),
         decoration: BoxDecoration(
-          color: isMe ? Colors.blue : Color(0xFFF5ED),
+          color: isMe ? Color(0xFFFF7000) : Colors.white, // Changed background color
           borderRadius: isMe
               ? BorderRadius.only(
             topLeft: Radius.circular(15.0),
@@ -27,7 +27,7 @@ class ChatBubble extends StatelessWidget {
         ),
         child: Text(
           text,
-          style: TextStyle(color: isMe ? Colors.white : Colors.black),
+          style: TextStyle(color: isMe ? Colors.white : Colors.black), // Changed text color
         ),
       ),
     );
@@ -53,7 +53,7 @@ class ChatBubble extends StatelessWidget {
         children: <Widget>[
           CircleAvatar(
             backgroundColor: Color(0xFFF5ED),
-            child: Icon(Icons.account_circle, color: Color(0xFFF5ED)),
+            child: Icon(Icons.adb, color: Color(0xFFF5ED)),
           ),
           SizedBox(width: 8.0), // Add some spacing between the profile picture and the message
           messageWidget,

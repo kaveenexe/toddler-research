@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFF2F2F2)),
-      home: const KnifePage(),
+      home: const ChatAssistant(),
     );
   }
 }
