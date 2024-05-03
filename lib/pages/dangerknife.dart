@@ -1,22 +1,26 @@
 import "package:flutter/material.dart";
 
-
 class KnifePage extends StatelessWidget {
   const KnifePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    double screenwidth = MediaQuery.of(context).size.width;
-    double screenheight = MediaQuery.of(context).size.height;
-     return Column(
-      children: [
-        Container(
-          width: 414,
-          height: 896,
-          clipBehavior: Clip.antiAlias,
-          decoration: BoxDecoration(color: Color(0xFFFAFAFA)),
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Danger Detection'),
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          width: screenWidth,
+          height: screenHeight >= 896 ? screenHeight : 896,
+          color: Color(0xFFFAFAFA),
           child: Stack(
             children: [
+              // Your existing content here
+              // Adjust dimensions and positions based on screenWidth and screenHeight
               Positioned(
                 left: 14,
                 top: 48,
@@ -447,7 +451,7 @@ class KnifePage extends StatelessWidget {
             ],
           ),
         ),
-      ],
+      ),
     );
   }
 }
