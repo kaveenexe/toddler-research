@@ -10,14 +10,16 @@ class ChatInputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(2.0),
+
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           Expanded(
             child: TextField(
               controller: textController,
               decoration: InputDecoration(
-                hintText: 'Enter your message...',
+                hintText: 'Ask about your toddler...',
               ),
               onSubmitted: onSubmit,
             ),

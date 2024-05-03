@@ -47,26 +47,29 @@ class _ChatAssistantState extends State<ChatAssistant> {
           ),
           title: const Text('Chat Assistant'), // Set the app bar title here
         ),
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: _buildChat(),
-          ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05, vertical: screenHeight * 0.01),
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: ChatInputField(
-                    textController: _textController,
-                    onSubmit: _handleSubmitted,
-                  ),
-                ),
-                SizedBox(width: screenWidth * 0.02),
-              ],
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: _buildChat(),
             ),
-          ),
-        ],
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.1, vertical: screenHeight * 0.01),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: ChatInputField(
+                      textController: _textController,
+                      onSubmit: _handleSubmitted,
+                    ),
+                  ),
+                  SizedBox(width: screenWidth * 0.02),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
