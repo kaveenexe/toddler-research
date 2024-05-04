@@ -12,7 +12,7 @@ class CryAnalyzer extends StatelessWidget {
 
   final List<CryReason> reasons = [
     CryReason(reason: "Hungry", percentage: 58.33),
-    CryReason(reason: "Diaper Change", percentage: 16.67),
+    CryReason(reason: "Uncomfortable", percentage: 16.67),
     CryReason(reason: "Sleep", percentage: 25.00),
   ];
 
