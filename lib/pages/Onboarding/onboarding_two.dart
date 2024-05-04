@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class OnboardingOne extends StatelessWidget {
-  const OnboardingOne({super.key});
+class OnboardingTwo extends StatelessWidget {
+  const OnboardingTwo({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class OnboardingOne extends StatelessWidget {
             Stack(
               children: [
                 Image.asset(
-                  "assets/OnboardingOne.png",
+                  "assets/OnboardingTwo.png",
                   width: screenWidth,
                   height: screenHeight / 2,
                   fit: BoxFit.cover,
@@ -28,7 +28,7 @@ class OnboardingOne extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 17, right: 17),
               child: const Text(
-                  "Connect with ease, even in your native tongue!",
+                  "Decode your baby's needs effortlessly!",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: 30,
@@ -38,7 +38,7 @@ class OnboardingOne extends StatelessWidget {
             const Padding(
               padding: EdgeInsets.only(top: 30, left: 20, right: 20),
               child: Text(
-                "Providing personalized guidance and support ensuring seamless communication and understanding",
+                "Advanced audio analysis and personalized notifications help you understand and respond to your little one's cues like never before",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 18,
