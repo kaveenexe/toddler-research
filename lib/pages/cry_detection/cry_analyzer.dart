@@ -27,20 +27,28 @@ class CryAnalyzer extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          icon: Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: const Text(
+        title: Text(
           'Cry Analyzer',
           style: TextStyle(
             color: Colors.black,
             fontFamily: 'Poppins',
-            fontSize: 18,
+            fontSize: 18, // Set your desired font size
           ),
         ),
         backgroundColor: Colors.white,
         elevation: 1,
-        centerTitle: true,
+        centerTitle: true, // Centers the title in the AppBar
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.notifications_none, color: Colors.black),
+            onPressed: () {
+              // Handle notifications
+            },
+          )
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
