@@ -8,6 +8,8 @@ import 'package:flutterapp/pages/SplashScreen/scplash_screen.dart';
 import 'package:flutterapp/pages/chat_screen.dart';
 import 'package:flutterapp/pages/dangerscissor.dart';
 import 'package:flutterapp/pages/dangerknife.dart';
+import 'package:flutterapp/pages/login/login_page.dart';
+import 'package:flutterapp/pages/login/register_page.dart';
 import 'package:flutterapp/pages/toddlerdetailsinput_screen.dart';
 import 'package:flutterapp/pages/cry_detection/cry_analyzer.dart';
 import 'package:flutterapp/pages/cry_detection/cry_history.dart';
@@ -28,7 +30,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFF2F2F2)),
-      home: SplashScreen(),
+      home: RegisterPage(),
     );
   }
 }
