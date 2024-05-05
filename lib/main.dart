@@ -4,6 +4,7 @@ import 'package:flutterapp/pages/Onboarding/onboarding_two.dart';
 import 'package:flutterapp/pages/Onboarding/onboarding_three.dart';
 import 'package:flutterapp/pages/Onboarding/onboarding_four.dart';
 import 'package:flutterapp/pages/Onboarding/onboarding_screens.dart';
+import 'package:flutterapp/pages/SplashScreen/scplash_screen.dart';
 import 'package:flutterapp/pages/chat_screen.dart';
 import 'package:flutterapp/pages/dangerscissor.dart';
 import 'package:flutterapp/pages/dangerknife.dart';
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFF2F2F2)),
-      home: OnBoaringScreen(),
+      home: SplashScreen(),
     );
   }
 }
