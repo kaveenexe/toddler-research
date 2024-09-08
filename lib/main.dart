@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:flutterapp/pages/Onboarding/onboarding_one.dart';
 import 'package:flutterapp/pages/Onboarding/onboarding_two.dart';
 import 'package:flutterapp/pages/Onboarding/onboarding_three.dart';
@@ -28,9 +29,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+
       title: 'Flutter Demo',
-      theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFF2F2F2)),
-      home: RegisterPage(),
+      theme: ThemeData(
+        scaffoldBackgroundColor: const Color(0xFFF2F2F2),
+        textTheme: GoogleFonts.poppinsTextTheme(
+          Theme.of(context).textTheme,
+        ),
+      ),
+      home: ChatAssistant(),
+      //home: ToddlerDetailsInput(),
     );
   }
 }
