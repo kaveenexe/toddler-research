@@ -79,15 +79,15 @@ class _ChatAssistantState extends State<ChatAssistant> {
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            // Handle back button press here
-          },
-        ),
-        title: const Text('Todly Assistant'),
-      ),
+      // appBar: AppBar(
+      //   leading: IconButton(
+      //     icon: Icon(Icons.arrow_back),
+      //     onPressed: () {
+      //       // Handle back button press here
+      //     },
+      //   ),
+      //   title: const Text('Todly Assistant'),
+      // ),
       body: Container(
         color: Colors.white, // Set background color to white
         child: Column(
@@ -108,12 +108,12 @@ class _ChatAssistantState extends State<ChatAssistant> {
                             children: [
                               Image.asset(
                                 'assets/robot1.png', // robot image
-                                height: screenHeight / 2.6,
+                                height: screenHeight / 2.7,
                               ),
                               Text(
                                 'ආයුබෝවන්!',
                                 style: GoogleFonts.gemunuLibre(
-                                  fontSize: 35,
+                                  fontSize: 32,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),

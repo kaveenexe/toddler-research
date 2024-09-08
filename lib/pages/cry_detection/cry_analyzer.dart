@@ -1,169 +1,186 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:flutterapp/model/cry_reason.dart';
-import 'package:flutterapp/components/piechart.dart';
-import 'package:flutterapp/components/table.dart';
-import 'package:flutterapp/components/infobox.dart';
+import 'package:flutterapp/pages/cry_detection/cry_predicting.dart';
 
-const Color customOrange = Color(0xFFFF7000);
-const Color customBeige = Color(0xFFFFF5ED);
+class CryAnalyzer extends StatefulWidget {
+  @override
+  _CryAnalyzer createState() => _CryAnalyzer();
+}
 
-class CryAnalyzer extends StatelessWidget {
-  CryAnalyzer({Key? key}) : super(key: key);
+class _CryAnalyzer extends State<CryAnalyzer> {
+  bool isRecording = true;
+  int recordingTime = 0;
 
-  final List<CryReason> reasons = [
-    CryReason(reason: "Hungry", percentage: 58.33),
-    CryReason(reason: "Uncomfortable", percentage: 16.67),
-    CryReason(reason: "Sleep", percentage: 25.00),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    startRecording();
+  }
 
-  final List<Color> colors = [
-    Color(0xFF2656AB), // Deep blue color
-    Color(0xFF1CE4E0), // Bright teal color
-    Color(0xFFBA73F9), // Light purple color
-  ];
+  void startRecording() {
+    // Simulate recording time increment
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      if (!isRecording || recordingTime >= 10) {
+        timer.cancel();
+        navigateToCryPredictor();
+      } else {
+        setState(() {
+          recordingTime++;
+        });
+      }
+    });
+  }
+
+  void stopRecording() {
+    setState(() {
+      isRecording = false;
+    });
+    navigateToCryPredictor();
+  }
+
+  void navigateToCryPredictor() {
+    // Replace this with your navigation to CryPredictor page
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => CryPredictor(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor:
+      Color.fromARGB(255, 255, 255, 255), // Light turquoise background
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: Text(
-          'Cry Analyzer',
+        title: const Text(
+          'Analyzing',
           style: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontFamily: 'Poppins',
-            fontSize: 18, // Set your desired font size
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
           ),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: Color.fromRGBO(255, 136, 0, 1), // Custom orange color
         elevation: 1,
-        centerTitle: true, // Centers the title in the AppBar
+        centerTitle: true,
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.notifications_none, color: Colors.black),
+            icon: const Icon(Icons.notifications_none, color: Colors.white),
             onPressed: () {
               // Handle notifications
             },
-          )
+          ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      body: Center(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CustomPieChart(data: reasons),
-            CustomLegendTable(
-                data: reasons,
-                colors: colors), // Insert custom legend table here
-            SizedBox(height: 10),
-            SizedBox(
-              width: MediaQuery.of(context).size.width *
-                  0.9, // Adjust the width here
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                    horizontal:
-                        4), // Add horizontal padding inside the container
-                margin: const EdgeInsets.only(
-                    left: 9,
-                    right: 2), // Add left and right margins to the container
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color.fromARGB(255, 255, 255, 255)
-                          .withOpacity(0.3),
-                      spreadRadius: 2,
-                      blurRadius: 6,
-                      offset: Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment
-                      .spaceBetween, // Adjust spacing between the children
-                  children: [
-                    InfoBox(title: "Hours Cried", content: "2hrs/Day"),
-                    InfoBox(title: "Mostly", content: "Hungry"),
-                  ],
-                ),
+            // Timer and recording indicator
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 6, horizontal: 15),
+              decoration: BoxDecoration(
+                color: Colors.black87,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'Analyzing ${recordingTime}s ',
+                    style: TextStyle(color: Colors.white, fontSize: 17),
+                  ),
+                  Icon(
+                    Icons.circle,
+                    color: Colors.red,
+                    size: 12,
+                  ),
+                ],
               ),
             ),
-            SizedBox(height: 6),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Container(
-                constraints: BoxConstraints(
-                  minWidth: 350, // Minimum width of the container
-                  maxWidth: 350, // Maximum width of the container
-                ),
-                decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 255, 255, 255),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: customBeige,
-                    radius: 30,
-                    child: Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Image.asset('assets/cry.jpg'),
-                    ),
-                  ),
-                  title: Text('Crying Analyzer Result',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 17,
-                          fontFamily: 'Poppins')),
-                  subtitle: RichText(
-                    text: TextSpan(
-                      style: TextStyle(
-                        color: Colors.black, // Default text color
-                        fontFamily: 'Poppins',
-                        fontSize: 15,
-                      ),
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: 'Noah is crying due to ',
-                          style: TextStyle(
-                              height:
-                                  1.5), // Line height for spacing between lines
-                        ),
-                        TextSpan(
-                          text: 'hungry',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            height: 1.5, // Maintain consistent line height
-                          ),
-                        ),
-                      ],
-                    ),
+            SizedBox(height: 80),
+            // Circular recording progress with stop button
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                SizedBox(
+                  height: 180,
+                  width: 180,
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                        Color.fromRGBO(255, 136, 0, 1)), // Custom orange color
+                    strokeWidth: 18,
+                    value: recordingTime / 10, // Circular progress value
+                    backgroundColor: const Color.fromARGB(255, 237, 235, 235),
                   ),
                 ),
-              ),
-            ),
-            Expanded(
-              child: Align(
-                alignment: Alignment
-                    .bottomCenter, // Align the button to the bottom center
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Handle navigation
-                  },
+                // Stop button with unique styling
+                ElevatedButton(
+                  onPressed: stopRecording,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: customOrange,
-                    foregroundColor: Colors.white,
-                    padding: EdgeInsets.symmetric(horizontal: 50, vertical: 12),
+                    shape: CircleBorder(),
+                    padding: EdgeInsets.all(28),
+                    backgroundColor:
+                    Color.fromRGBO(255, 136, 0, 1), // Custom orange color
+                    shadowColor: Colors.black38,
+                    elevation: 10,
                   ),
-                  child: const Text(
-                    'GO TO HOME',
-                    style: TextStyle(fontSize: 16),
-                  ),
+                  child: Icon(Icons.stop, color: Colors.white, size: 36),
                 ),
+              ],
+            ),
+            SizedBox(height: 70),
+            // Capture instruction
+            ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.black87,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 28, vertical: 13),
+                shadowColor: Colors.black38,
+                elevation: 5,
+              ),
+              child: Text(
+                'Cry captured?',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontFamily: 'Poppins',
+                ),
+              ),
+            ),
+            SizedBox(height: 24),
+            // Stop instruction text
+            Text.rich(
+              TextSpan(
+                text: 'Press ', // Normal text before "stop"
+                style: TextStyle(
+                  color: Colors.black87,
+                  fontSize: 18,
+                  fontWeight: FontWeight.normal,
+                  fontFamily: 'Poppins',
+                ),
+                children: <TextSpan>[
+                  TextSpan(
+                    text: 'stop', // Bold "stop" text
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Poppins',
+                    ),
+                  ),
+                  TextSpan(
+                    text: ' to check for the result', // Normal text after "stop"
+                  ),
+                ],
               ),
             ),
           ],
