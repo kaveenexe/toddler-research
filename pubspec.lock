@@ -10,7 +10,7 @@ packages:
     source: hosted
     version: "2.11.0"
   audioplayers:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: audioplayers
       sha256: c346ba5a39dc208f1bab55fc239855f573d69b0e832402114bf0b793622adc4d
@@ -74,7 +74,6 @@ packages:
     source: hosted
     version: "2.1.1"
   camera:
-    dependency: "direct dev"
     dependency: "direct main"
     description:
       name: camera
@@ -182,10 +181,10 @@ packages:
     dependency: transitive
     description:
       name: file
-      sha256: "5fc22d7c25582e38ad9a8515372cd9a93834027aacf1801cf01164dac0ffa08c"
+      sha256: a3b4f84adafef897088c160faf7dfffb7696046cb13ae90b508c2cbc95d3b8d4
       url: "https://pub.dev"
     source: hosted
-    version: "7.0.0"
+    version: "7.0.1"
   fixnum:
     dependency: transitive
     description:
@@ -252,13 +251,19 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_tts:
+    dependency: "direct main"
+    description:
+      name: flutter_tts
+      sha256: cbb3fd43b946e62398560235469e6113e4fe26c40eab1b7cb5e7c417503fb3a8
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.8.5"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
     source: sdk
     version: "0.0.0"
-  http:
-    dependency: "direct dev"
   google_fonts:
     dependency: "direct main"
     description:
@@ -372,7 +377,6 @@ packages:
     source: hosted
     version: "1.9.0"
   path_provider:
-    dependency: transitive
     dependency: "direct main"
     description:
       name: path_provider
