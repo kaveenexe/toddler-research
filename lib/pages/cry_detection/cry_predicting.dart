@@ -30,7 +30,7 @@ class _CryPredictorState extends State<CryPredictor> {
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         setState(() {
-          _prediction = 'Discomfort' ?? 'No prediction available';
+          _prediction = data['predicted_class'] ?? 'No prediction available';
         });
       } else {
         setState(() {

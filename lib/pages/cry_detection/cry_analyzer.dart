@@ -67,7 +67,7 @@ class _CryAnalyzer extends State<CryAnalyzer> {
             fontWeight: FontWeight.w500,
           ),
         ),
-        backgroundColor: Color.fromRGBO(255, 136, 0, 1), // Custom orange color
+        backgroundColor: Color(0xFFFF7000), // Custom orange color
         elevation: 1,
         centerTitle: true,
         actions: <Widget>[
