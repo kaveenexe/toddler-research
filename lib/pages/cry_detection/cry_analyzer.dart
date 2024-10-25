@@ -52,7 +52,7 @@ class _CryAnalyzer extends State<CryAnalyzer> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor:
-      Color.fromARGB(255, 255, 255, 255), // Light turquoise background
+          Color.fromARGB(255, 255, 255, 255), // Light turquoise background
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -67,7 +67,7 @@ class _CryAnalyzer extends State<CryAnalyzer> {
             fontWeight: FontWeight.w500,
           ),
         ),
-        backgroundColor: Color.fromRGBO(255, 136, 0, 1), // Custom orange color
+        backgroundColor: Color(0xFFFF7000), // Custom orange color
         elevation: 1,
         centerTitle: true,
         actions: <Widget>[
@@ -128,7 +128,7 @@ class _CryAnalyzer extends State<CryAnalyzer> {
                     shape: CircleBorder(),
                     padding: EdgeInsets.all(28),
                     backgroundColor:
-                    Color.fromRGBO(255, 136, 0, 1), // Custom orange color
+                        Color.fromRGBO(255, 136, 0, 1), // Custom orange color
                     shadowColor: Colors.black38,
                     elevation: 10,
                   ),
