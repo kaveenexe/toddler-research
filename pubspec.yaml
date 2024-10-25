@@ -25,13 +25,18 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  audioplayers: ^6.1.0
+
+
   flutter_lints: ^4.0.0
 
 flutter:
   uses-material-design: true
   assets:
+    - assets/alert.mp3
     - assets/
     - assets/smile.jpg
     - assets/mic.jpg
     - assets/cry_dark.jpg
     - assets/cry.jpg
+
