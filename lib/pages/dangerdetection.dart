@@ -4,22 +4,23 @@ import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:http/http.dart' as http;  
 import 'package:audioplayers/audioplayers.dart';  
-import 'package:flutter_tts/flutter_tts.dart';  // Text-to-Speech for English
+import 'package:flutter_tts/flutter_tts.dart';
 
 class DangerLivefeed extends StatefulWidget {
   @override
-  _LivefeedState createState() => _LivefeedState();
+  _DangerLivefeedState createState() => _DangerLivefeedState();
 }
 
-class _LivefeedState extends State<DangerLivefeed> {
+class _DangerLivefeedState extends State<DangerLivefeed> {
   CameraController? _cameraController;
   List<CameraDescription>? _cameras;
   String _detectedObjects = 'No dangerous objects detected';
   bool _isProcessing = false;
   Timer? _timer;
+  DateTime? _lastAlertTime;
 
-  AudioPlayer _audioPlayer = AudioPlayer(); // Initialize AudioPlayer
-  FlutterTts _flutterTts = FlutterTts(); // Initialize FlutterTTS for English
+  AudioPlayer _audioPlayer = AudioPlayer();
+  FlutterTts _flutterTts = FlutterTts();
 
   @override
   void initState() {
@@ -44,7 +45,7 @@ class _LivefeedState extends State<DangerLivefeed> {
   }
 
   void _startImageStream() {
-    _timer = Timer.periodic(Duration(milliseconds: 1000), (timer) {
+    _timer = Timer.periodic(Duration(seconds: 2), (timer) {
       if (!_isProcessing) {
         _isProcessing = true;
         _processImage();
@@ -64,7 +65,7 @@ class _LivefeedState extends State<DangerLivefeed> {
 
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.1.7:5000/process_image'), // Sends the image as a POST request to the Flask backend
+        Uri.parse('http://192.168.1.7:5000/process_image'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'image': base64Image}),
       );
@@ -74,77 +75,67 @@ class _LivefeedState extends State<DangerLivefeed> {
         setState(() {
           _detectedObjects = result['alert_message'] ?? 'No dangerous objects detected';
 
-          // Trigger the alert sequence if a dangerous object is detected
+          // Trigger the alert sequence if a dangerous object is detected and avoid repeated alerts
           if (result['alert_message'] != null && result['alert_message'].isNotEmpty) {
             _triggerAlertSequence(result['alert_message']);
           }
         });
       } else {
-        print('Error: ${response.statusCode}');
         setState(() {
-          _detectedObjects = 'Error: ${response.statusCode}';
+          _detectedObjects = 'Server Error: ${response.statusCode}';
         });
       }
     } catch (e) {
-      print('Error processing image: $e');
       setState(() {
-        _detectedObjects = 'Error processing image: $e';
+        _detectedObjects = 'Network Error: Unable to process image';
       });
+      print('Error processing image: $e');
     } finally {
       _isProcessing = false;
     }
   }
 
-  // Function to handle the alert sequence
   Future<void> _triggerAlertSequence(String detectedObject) async {
-    // Play the initial alert sound
-    await _playAlertSound();
+    final currentTime = DateTime.now();
+    if (_lastAlertTime == null || currentTime.difference(_lastAlertTime!) > Duration(seconds: 5)) {
+      _lastAlertTime = currentTime;
 
-    // Delay to allow sound to play fully
-    await Future.delayed(Duration(seconds: 1));
-
-    // Speak the relevant message based on the detected object
-    await _speakAlert(detectedObject);
-
-    // Delay for the TTS to complete before replaying the alert sound
-    await Future.delayed(Duration(seconds: 2));
-
-    // Play the alert sound again
-    await _playAlertSound();
+      await _playAlertSound();
+      await Future.delayed(Duration(seconds: 1));
+      await _speakAlert(detectedObject);
+      await Future.delayed(Duration(seconds: 2));
+      await _playAlertSound();
+    }
   }
 
   Future<void> _playAlertSound() async {
-    // Play alert sound from assets
-    await _audioPlayer.play(AssetSource('alert.mp3')); // Correct method for asset playback
+    await _audioPlayer.play(AssetSource('alert.mp3'));
   }
 
-  // Updated _speakAlert function to give appropriate voice messages
   Future<void> _speakAlert(String detectedObject) async {
     String message = '';
 
-    // Check detected object and create appropriate alert message
     if (detectedObject.contains("knife")) {
-      message = 'Knife is detected! This is not a safe zone.';
+      message = 'Knife detected! This is not a safe zone.';
     } else if (detectedObject.contains("scissor")) {
-      message = 'Scissor is detected! Please remove them immediately.';
+      message = 'Scissor detected! Please remove it immediately.';
     } else if (detectedObject.contains("plug")) {
-      message = 'Plug point is detected! This is not a safe zone.';
+      message = 'Plug point detected! This is not a safe zone.';
     } else {
       message = 'No dangerous objects detected.';
     }
 
-    // Speak the message using text-to-speech
     await _flutterTts.setLanguage('en-US');
     await _flutterTts.setSpeechRate(0.5);
-    await _flutterTts.speak(message); // English TTS for the alert
+    await _flutterTts.speak(message);
   }
 
   @override
   void dispose() {
     _timer?.cancel();
     _cameraController?.dispose();
-    _audioPlayer.dispose(); // Dispose the audio player
-    _flutterTts.stop(); // Stop TTS when screen is disposed
+    _audioPlayer.dispose();
+    _flutterTts.stop();
     super.dispose();
   }
 
@@ -157,14 +148,30 @@ class _LivefeedState extends State<DangerLivefeed> {
       appBar: AppBar(title: Text('Real-time Dangerous Object Detection')),
       body: Column(
         children: [
-          Expanded(
-            child: CameraPreview(_cameraController!),
-          ),
+          Expanded(child: CameraPreview(_cameraController!)),
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Text(
-              'Detected Objects: $_detectedObjects',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            child: Column(
+              children: [
+                Text(
+                  'Detected Objects:',
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 8),
+                AnimatedOpacity(
+                  opacity: _detectedObjects.contains('No dangerous objects') ? 0.5 : 1.0,
+                  duration: Duration(seconds: 1),
+                  child: Text(
+                    _detectedObjects,
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: _detectedObjects.contains('No dangerous objects') ? Colors.green : Colors.redAccent,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -172,4 +179,3 @@ class _LivefeedState extends State<DangerLivefeed> {
     );
   }
 }
-
