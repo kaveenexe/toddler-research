@@ -1,4 +1,3 @@
-// chat_bubble.dart
 import 'package:flutter/material.dart';
 
 class ChatBubble extends StatelessWidget {
@@ -12,11 +11,17 @@ class ChatBubble extends StatelessWidget {
     return Align(
       alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
+        constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.7),
         margin: EdgeInsets.symmetric(vertical: 4, horizontal: 16),
         padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
           color: isMe ? Color(0xFFFF7000) : Colors.grey[300],
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(15),
+            topRight: Radius.circular(15),
+            bottomLeft: isMe ? Radius.circular(15) : Radius.circular(0),
+            bottomRight: isMe ? Radius.circular(0) : Radius.circular(15),
+          ),
         ),
         child: Text(
           text,
