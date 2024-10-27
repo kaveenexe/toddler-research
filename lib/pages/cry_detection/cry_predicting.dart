@@ -25,7 +25,7 @@ class _CryPredictorState extends State<CryPredictor> {
   Future<void> _fetchPrediction() async {
     try {
       final response =
-      await http.get(Uri.parse('http://192.168.8.101:5000/get-prediction'));
+          await http.get(Uri.parse('http://192.168.8.104:5000/get-prediction'));
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
@@ -146,7 +146,7 @@ class _CryPredictorState extends State<CryPredictor> {
               // Prediction Container
               Container(
                 padding:
-                const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 margin: const EdgeInsets.symmetric(horizontal: 20),
                 decoration: BoxDecoration(
                   color: const Color(0xFFFFFFFF),
@@ -171,7 +171,7 @@ class _CryPredictorState extends State<CryPredictor> {
                             CircleAvatar(
                               radius: 28,
                               backgroundColor:
-                              const Color.fromARGB(255, 233, 232, 232),
+                                  const Color.fromARGB(255, 233, 232, 232),
                               child: Image.asset(
                                 'assets/cry_dark.jpg',
                                 width: 45,
@@ -222,7 +222,7 @@ class _CryPredictorState extends State<CryPredictor> {
                   child: const Text(
                     'Recommendations',
                     style: TextStyle(
-                      color: Color.fromARGB(255, 51, 14, 2),
+                      color: Color.fromARGB(255, 0, 0, 0),
                       fontFamily: 'Poppins',
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
@@ -238,7 +238,7 @@ class _CryPredictorState extends State<CryPredictor> {
                   child: const Text(
                     'We think these will help calm your baby! Try working through the following recommendations',
                     style: TextStyle(
-                      color: Color.fromARGB(255, 39, 10, 1),
+                      color: Color.fromARGB(255, 16, 16, 16),
                       fontFamily: 'Poppins',
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
@@ -249,7 +249,7 @@ class _CryPredictorState extends State<CryPredictor> {
               // Recommendations Section
               Container(
                 padding:
-                const EdgeInsets.symmetric(horizontal: 20, vertical: 7),
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 7),
                 margin: const EdgeInsets.symmetric(horizontal: 3),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -267,7 +267,7 @@ class _CryPredictorState extends State<CryPredictor> {
                   // Cancel button to navigate to CryRecorder
                   Padding(
                     padding:
-                    const EdgeInsets.all(20), // Adjust padding as needed
+                        const EdgeInsets.all(20), // Adjust padding as needed
                     child: SizedBox(
                       width: 160,
                       height: 50,
@@ -322,7 +322,7 @@ class _CryPredictorState extends State<CryPredictor> {
                         padding: const EdgeInsets.all(20),
                       ),
                       child:
-                      const Icon(Icons.mic, color: Colors.white, size: 30),
+                          const Icon(Icons.mic, color: Colors.white, size: 30),
                     ),
                   ),
                 ],

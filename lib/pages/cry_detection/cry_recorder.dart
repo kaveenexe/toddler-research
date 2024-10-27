@@ -45,11 +45,18 @@ class _CryRecorderState extends State<CryRecorder>
   }
 
   Future<void> _initializeRecorder() async {
-    var status = await Permission.microphone.request();
-    if (status != PermissionStatus.granted) {
-      print('Microphone permission not granted');
+    // Request microphone permission
+    var micStatus = await Permission.microphone.request();
+    // Request storage permission
+    var storageStatus = await Permission.storage.request();
+
+    // Check if permissions are granted
+    if (micStatus != PermissionStatus.granted ||
+        storageStatus != PermissionStatus.granted) {
+      print('Microphone or Storage permission not granted');
       return;
     }
+
     await _recorder.openRecorder();
     _recorder.setSubscriptionDuration(Duration(milliseconds: 500));
   }
@@ -141,7 +148,7 @@ class _CryRecorderState extends State<CryRecorder>
       File file = File(_filePath);
       var request = http.MultipartRequest(
         'POST',
-        Uri.parse('http://192.168.8.101:5000/predict'),
+        Uri.parse('http://192.168.8.104:5000/predict'),
       );
       request.files.add(await http.MultipartFile.fromPath('file', file.path));
       var response = await request.send();
@@ -346,8 +353,7 @@ class _CryRecorderState extends State<CryRecorder>
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                CryHistory(),
+                            builder: (context) => CryHistory(),
                           ),
                         );
                       },
