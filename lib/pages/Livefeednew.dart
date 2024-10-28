@@ -25,13 +25,11 @@ class _LivefeedState extends State<LivefeedNew> {
   IO.Socket? _socket;
   bool _notificationsEnabled = true;
 
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
   static const String notificationChannelId = 'crying_detection_channel';
   static const String notificationChannelName = 'Crying Detection Alerts';
-  static const String notificationChannelDescription =
-      'Alerts when crying is detected';
+  static const String notificationChannelDescription = 'Alerts when crying is detected';
 
   @override
   void initState() {
@@ -92,10 +90,9 @@ class _LivefeedState extends State<LivefeedNew> {
 
   Future<void> _initializeNotifications() async {
     const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+    AndroidInitializationSettings('@mipmap/ic_launcher');
 
-    const InitializationSettings initializationSettings =
-        InitializationSettings(
+    const InitializationSettings initializationSettings = InitializationSettings(
       android: initializationSettingsAndroid,
     );
 
@@ -110,8 +107,8 @@ class _LivefeedState extends State<LivefeedNew> {
 
   Future<void> _requestNotificationPermissions() async {
     final AndroidFlutterLocalNotificationsPlugin? androidImplementation =
-        flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>();
+    flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
+        AndroidFlutterLocalNotificationsPlugin>();
 
     if (androidImplementation != null) {
       await androidImplementation.requestPermission();
@@ -131,7 +128,7 @@ class _LivefeedState extends State<LivefeedNew> {
 
     await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
+        AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
   }
 
@@ -166,7 +163,7 @@ class _LivefeedState extends State<LivefeedNew> {
   bool _isCryingEmotion(String emotion) {
     final cryingIndicators = ['crying', 'sad', 'distressed', 'tears'];
     return cryingIndicators.any(
-        (indicator) => emotion.toLowerCase().contains(indicator.toLowerCase()));
+            (indicator) => emotion.toLowerCase().contains(indicator.toLowerCase()));
   }
 
   Future<void> _showCryingEmotionNotification() async {
@@ -178,7 +175,7 @@ class _LivefeedState extends State<LivefeedNew> {
     }
 
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
-        AndroidNotificationDetails(
+    AndroidNotificationDetails(
       notificationChannelId,
       notificationChannelName,
       channelDescription: notificationChannelDescription,
@@ -254,9 +251,7 @@ class _LivefeedState extends State<LivefeedNew> {
         actions: [
           IconButton(
             icon: Icon(
-              _notificationsEnabled
-                  ? Icons.notifications_active
-                  : Icons.notifications_off,
+              _notificationsEnabled ? Icons.notifications_active : Icons.notifications_off,
               color: Colors.white,
             ),
             onPressed: () {
@@ -299,36 +294,35 @@ class _LivefeedState extends State<LivefeedNew> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(17),
                     child: _cameraController != null &&
-                            _cameraController!.value.isInitialized
+                        _cameraController!.value.isInitialized
                         ? Stack(
-                            fit: StackFit.expand,
-                            children: [
-                              CameraPreview(_cameraController!),
-                              Positioned(
-                                left: 16,
-                                top: 16,
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 12, vertical: 6),
-                                  decoration: BoxDecoration(
-                                    color: customOrange.withOpacity(0.8),
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: const Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Icon(Icons.fiber_manual_record,
-                                          color: Colors.red),
-                                      SizedBox(width: 5),
-                                      Text('Monitoring',
-                                          style:
-                                              TextStyle(color: Colors.white)),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          )
+                      fit: StackFit.expand,
+                      children: [
+                        CameraPreview(_cameraController!),
+                        Positioned(
+                          left: 16,
+                          top: 16,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 6),
+                            decoration: BoxDecoration(
+                              color: customOrange.withOpacity(0.8),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: const Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(Icons.fiber_manual_record,
+                                    color: Colors.red),
+                                SizedBox(width: 5),
+                                Text('Monitoring',
+                                    style: TextStyle(color: Colors.white)),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
                         : const Center(child: CircularProgressIndicator()),
                   ),
                 ),
