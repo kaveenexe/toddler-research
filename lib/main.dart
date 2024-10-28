@@ -19,6 +19,7 @@ import 'package:flutterapp/pages/cry_detection/cry_analyzer.dart';
 import 'package:flutterapp/pages/cry_detection/cry_history.dart';
 import 'package:flutterapp/pages/cry_detection/cry_recorder.dart';
 import 'package:flutterapp/pages/livefeed.dart';
+import 'package:flutterapp/pages/dangerdetection.dart';
 
 void main() {
   runApp(const MyApp());

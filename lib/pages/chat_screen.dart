@@ -40,12 +40,12 @@ class _ChatAssistantState extends State<ChatAssistant> {
 
   // Function to send question to backend
   Future<String> _sendQuestionToBackend(String question) async {
-    final url = Uri.parse('http://34.28.36.165:5000//process'); // Update with your Flask backend URL
+    final url = Uri.parse('http://34.69.137.28:5000/process'); // Update with your Flask backend URL
     try {
       final response = await http.post(
         url,
         headers: {"Content-Type": "application/json"},
-        body: jsonEncode({"question": question, "source_lang": "si", "target_lang": "en"}), // Sending JSON body
+        body: jsonEncode({"question": question, "source_lang": "si_LK", "target_lang": "en_XX"}), // Sending JSON body
       );
 
       if (response.statusCode == 200) {
@@ -135,7 +135,7 @@ class _ChatAssistantState extends State<ChatAssistant> {
                             scrollDirection: Axis.horizontal,
                             children: [
                               _buildPromptButton('මගේ දරුවා අඩන්නේ ඇයි?'),
-                              _buildPromptButton('දරුවාට කන්න හොද අහාර මොනවාද?'),
+                              _buildPromptButton('මගේ දරුවා කතා කිරීමට පටන් ගත යුත්තේ කවදාද?'),
                               _buildPromptButton('දරුවාට දින චර්යාවක් අවශ්‍යද?'),
                             ],
                           ),
