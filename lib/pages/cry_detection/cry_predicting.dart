@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/pages/cry_detection/cry_recorder.dart';
+import 'package:flutterapp/pages/bottom_navigation.dart';
 import 'package:http/http.dart' as http;
 
 const Color customOrange = Color(0xFFFF7000);
@@ -25,7 +26,7 @@ class _CryPredictorState extends State<CryPredictor> {
   Future<void> _fetchPrediction() async {
     try {
       final response =
-          await http.get(Uri.parse('http://192.168.8.104:5000/get-prediction'));
+          await http.get(Uri.parse('https://493e-2402-4000-20c3-5255-e89b-91d0-603f-302e.ngrok-free.app/get-prediction'));
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
@@ -277,7 +278,7 @@ class _CryPredictorState extends State<CryPredictor> {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  CryRecorder(), // Replace with your CryRecorder page
+                                  HomeScreen(), // Replace with your CryRecorder page
                             ),
                           );
                         },
