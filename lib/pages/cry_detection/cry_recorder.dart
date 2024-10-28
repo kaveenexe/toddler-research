@@ -44,28 +44,47 @@ class _CryRecorderState extends State<CryRecorder>
     );
   }
 
-  Future<void> _initializeRecorder() async {
-    // Request microphone permission
-    var micStatus = await Permission.microphone.request();
-    // Request storage permission
-    var storageStatus = await Permission.storage.request();
+  // Future<void> _initializeRecorder() async {
+  //   // Request microphone permission
+  //   var micStatus = await Permission.microphone.request();
+  //   // Request storage permission
+  //   var storageStatus = await Permission.storage.request();
+  //
+  //   // Check if permissions are granted
+  //   if (micStatus != PermissionStatus.granted ||
+  //       storageStatus != PermissionStatus.granted) {
+  //     print('Microphone or Storage permission not granted');
+  //     return;
+  //   }
+  //
+  //   await _recorder.openRecorder();
+  //   _recorder.setSubscriptionDuration(Duration(milliseconds: 500));
+  // }
 
-    // Check if permissions are granted
-    if (micStatus != PermissionStatus.granted ||
-        storageStatus != PermissionStatus.granted) {
-      print('Microphone or Storage permission not granted');
-      return;
+  Future<void> _initializeRecorder() async {
+    var micStatus = await Permission.microphone.request();
+    if (Platform.isAndroid) {
+      var storageStatus = await Permission.storage.request();
+      if (storageStatus.isDenied || storageStatus.isPermanentlyDenied) {
+        print("Storage permission not granted");
+        return;
+      }
     }
 
-    await _recorder.openRecorder();
-    _recorder.setSubscriptionDuration(Duration(milliseconds: 500));
+    if (micStatus.isGranted) {
+      await _recorder.openRecorder();
+      _recorder.setSubscriptionDuration(Duration(milliseconds: 500));
+    } else {
+      print('Microphone permission not granted');
+      return;
+    }
   }
 
   Future<void> startRecording() async {
     if (isRecording) return;
 
-    Directory tempDir = await getTemporaryDirectory();
-    _filePath = '${tempDir.path}/buffer.wav'; // Path for .wav file
+    Directory appDocDir = await getApplicationDocumentsDirectory();
+    _filePath = '${appDocDir.path}/buffer.wav';
 
     setState(() {
       isRecording = true;
@@ -74,6 +93,11 @@ class _CryRecorderState extends State<CryRecorder>
     _controller.stop(); // Stop the pulsating animation when recording starts
 
     try {
+      // Ensure the recorder is open
+      if (!_recorder.isRecording) {
+        await _recorder.openRecorder();
+      }
+
       await _recorder.startRecorder(
         toFile: _filePath,
         codec: Codec.pcm16WAV, // Save as .wav file
@@ -87,6 +111,36 @@ class _CryRecorderState extends State<CryRecorder>
       print('Error starting recording: $e');
     }
   }
+
+  // Future<void> startRecording() async {
+  //   if (isRecording) return;
+  //
+  //   Directory appDocDir = await getApplicationDocumentsDirectory();
+  //   _filePath = '${appDocDir.path}/buffer.wav';
+  //
+  //   // Directory tempDir = await getTemporaryDirectory();
+  //   // _filePath = '${tempDir.path}/buffer.wav'; // Path for .wav file
+  //
+  //   setState(() {
+  //     isRecording = true;
+  //   });
+  //
+  //   _controller.stop(); // Stop the pulsating animation when recording starts
+  //
+  //   try {
+  //     await _recorder.startRecorder(
+  //       toFile: _filePath,
+  //       codec: Codec.pcm16WAV, // Save as .wav file
+  //     );
+  //
+  //     // Simulate a 10-second recording
+  //     Future.delayed(const Duration(seconds: 10), () {
+  //       stopRecording();
+  //     });
+  //   } catch (e) {
+  //     print('Error starting recording: $e');
+  //   }
+  // }
 
   Future<void> stopRecording() async {
     if (!isRecording) return;
@@ -148,7 +202,7 @@ class _CryRecorderState extends State<CryRecorder>
       File file = File(_filePath);
       var request = http.MultipartRequest(
         'POST',
-        Uri.parse('http://192.168.8.104:5000/predict'),
+        Uri.parse('https://493e-2402-4000-20c3-5255-e89b-91d0-603f-302e.ngrok-free.app/predict'),
       );
       request.files.add(await http.MultipartFile.fromPath('file', file.path));
       var response = await request.send();

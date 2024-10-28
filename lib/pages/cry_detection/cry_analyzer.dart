@@ -21,7 +21,7 @@ class _CryAnalyzer extends State<CryAnalyzer> {
   void startRecording() {
     // Simulate recording time increment
     Timer.periodic(Duration(seconds: 1), (timer) {
-      if (!isRecording || recordingTime >= 10) {
+      if (!isRecording || recordingTime >= 5) {
         timer.cancel();
         navigateToCryPredictor();
       } else {
@@ -117,7 +117,7 @@ class _CryAnalyzer extends State<CryAnalyzer> {
                     valueColor: AlwaysStoppedAnimation<Color>(
                         Color.fromRGBO(255, 136, 0, 1)), // Custom orange color
                     strokeWidth: 18,
-                    value: recordingTime / 10, // Circular progress value
+                    value: recordingTime / 5, // Circular progress value
                     backgroundColor: const Color.fromARGB(255, 237, 235, 235),
                   ),
                 ),

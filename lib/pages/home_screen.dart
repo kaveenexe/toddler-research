@@ -90,8 +90,11 @@ class HomePage extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => CryRecorder()),
                     );
                   },
-                  icon: Icon(Icons.mic, size: 24),
-                  label: Text('Start Cry Detection'),
+                  icon: Icon(Icons.mic, size: 24, color: Colors.white), // Set icon color to white
+                  label: Text(
+                    'Start Cry Detection',
+                    style: TextStyle(color: Colors.white), // Set text color to white
+                  ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFFff7000), // Theme color
                     padding: EdgeInsets.symmetric(vertical: 14.0, horizontal: 16.0),
@@ -100,6 +103,8 @@ class HomePage extends StatelessWidget {
                     ),
                     elevation: 8,
                     textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    // Set foreground color for both icon and text
+                    foregroundColor: Colors.white,
                   ),
                 ),
               ),
