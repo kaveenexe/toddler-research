@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/pages/cry_detection/cry_recorder.dart';
+import 'package:flutterapp/pages/dangerdetection.dart';
 import 'package:flutterapp/pages/home_screen.dart';
 import 'package:flutterapp/pages/livefeed.dart';
+import 'Livefeednew.dart';
 import 'chat_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -17,7 +19,8 @@ class _HomeScreenState extends State<HomeScreen> {
     HomePage(), // Updated Home page design
     ChatAssistant(),
     CryRecorder(),
-    Livefeed()
+    LivefeedNew(),
+    DangerLivefeed()
   ];
 
   // Function to handle tab change

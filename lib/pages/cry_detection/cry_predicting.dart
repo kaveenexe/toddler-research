@@ -26,7 +26,7 @@ class _CryPredictorState extends State<CryPredictor> {
   Future<void> _fetchPrediction() async {
     try {
       final response =
-          await http.get(Uri.parse('https://493e-2402-4000-20c3-5255-e89b-91d0-603f-302e.ngrok-free.app/get-prediction'));
+          await http.get(Uri.parse('https://e2f7-212-104-231-182.ngrok-free.app/get-prediction'));
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);

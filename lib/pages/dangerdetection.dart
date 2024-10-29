@@ -65,7 +65,7 @@ class _DangerLivefeedState extends State<DangerLivefeed> {
 
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.1.7:5000/process_image'),
+        Uri.parse('https://b354-2402-4000-13d0-5df4-7488-f71d-fb87-319d.ngrok-free.app/process_image'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'image': base64Image}),
       );

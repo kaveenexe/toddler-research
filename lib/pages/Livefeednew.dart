@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
@@ -40,7 +41,7 @@ class _LivefeedState extends State<LivefeedNew> {
   }
 
   void _initializeSocket() {
-    _socket = IO.io('http://192.168.1.102:5000', <String, dynamic>{
+    _socket = IO.io('http://34.134.215.28:5000', <String, dynamic>{
       'transports': ['websocket'],
       'autoConnect': true,
     });
@@ -106,14 +107,26 @@ class _LivefeedState extends State<LivefeedNew> {
   }
 
   Future<void> _requestNotificationPermissions() async {
-    final AndroidFlutterLocalNotificationsPlugin? androidImplementation =
-    flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
-        AndroidFlutterLocalNotificationsPlugin>();
+    // For Android 13+ (API level 33), explicitly request notification permission
+    if (Theme.of(context).platform == TargetPlatform.android &&
+        await Permission.notification.isDenied) {
+      await Permission.notification.request();
+    }
 
-    if (androidImplementation != null) {
-      await androidImplementation.requestPermission();
+    // For iOS, you can still use the permission request on `flutterLocalNotificationsPlugin`
+    final IOSFlutterLocalNotificationsPlugin? iosImplementation =
+    flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
+        IOSFlutterLocalNotificationsPlugin>();
+
+    if (iosImplementation != null) {
+      await iosImplementation.requestPermissions(
+        alert: true,
+        badge: true,
+        sound: true,
+      );
     }
   }
+
 
   Future<void> _createNotificationChannel() async {
     const AndroidNotificationChannel channel = AndroidNotificationChannel(

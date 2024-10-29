@@ -61,11 +61,15 @@ class _CryRecorderState extends State<CryRecorder>
   //   _recorder.setSubscriptionDuration(Duration(milliseconds: 500));
   // }
 
+
+
   Future<void> _initializeRecorder() async {
     var micStatus = await Permission.microphone.request();
-    if (Platform.isAndroid) {
-      var storageStatus = await Permission.storage.request();
-      if (storageStatus.isDenied || storageStatus.isPermanentlyDenied) {
+
+    if (Platform.isAndroid && micStatus.isGranted) {
+      if (await Permission.storage.request().isDenied ||
+          (await Permission.manageExternalStorage.isDenied &&
+              await Permission.manageExternalStorage.request().isDenied)) {
         print("Storage permission not granted");
         return;
       }
@@ -79,6 +83,7 @@ class _CryRecorderState extends State<CryRecorder>
       return;
     }
   }
+
 
   Future<void> startRecording() async {
     if (isRecording) return;
@@ -202,7 +207,7 @@ class _CryRecorderState extends State<CryRecorder>
       File file = File(_filePath);
       var request = http.MultipartRequest(
         'POST',
-        Uri.parse('https://493e-2402-4000-20c3-5255-e89b-91d0-603f-302e.ngrok-free.app/predict'),
+        Uri.parse('https://e2f7-212-104-231-182.ngrok-free.app/predict'),
       );
       request.files.add(await http.MultipartFile.fromPath('file', file.path));
       var response = await request.send();
